@@ -34,14 +34,14 @@ function getActiveFontStylesheet(selectorSuffix: string): HTMLStyleElement {
 /**
  * Add/update declaration for applying the current active font
  */
-export function applyActiveFont(
-	activeFont: Font,
+ export function applyActiveFont(
+	activeFont: String,
 	previousFontFamily: string,
 	selectorSuffix: string,
 ): void {
 	const style = `
 		.apply-font${selectorSuffix} {
-			font-family: "${activeFont.family}"${previousFontFamily ? `, "${previousFontFamily}"` : ""};
+			font-family: "${activeFont}"${previousFontFamily ? `, "${previousFontFamily}"` : ""};
 		}
 	`;
 	const activeFontStylesheet = getActiveFontStylesheet(selectorSuffix);

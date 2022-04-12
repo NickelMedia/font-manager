@@ -9,14 +9,14 @@ import { getFontId, validatePickerId } from "./utils/ids";
  * Class for managing the list of fonts for the font picker, keeping track of the active font and
  * downloading/activating Google Fonts
  */
-export default class FontManager {
+ export default class FontManager {
 	// Parameters
 
 	private readonly apiKey: string;
 
 	private readonly options: Options;
 
-	private onChange: (font: Font) => void;
+	private onChange: (font: String) => void;
 
 	// Other class variables
 
@@ -48,7 +48,7 @@ export default class FontManager {
 			sort = OPTIONS_DEFAULTS.sort,
 		}: Options,
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
-		onChange: (font: Font) => void = (): void => {},
+		onChange: (font: String) => void = (): void => {},
 	) {
 		// Validate pickerId parameter
 		validatePickerId(pickerId);
@@ -80,7 +80,6 @@ export default class FontManager {
 	public async init(): Promise<FontList> {
 		// Get list of all fonts
 		const fonts = await getFontList(this.apiKey);
-
 		// Save desired fonts in the font map
 		for (let i = 0; i < fonts.length; i += 1) {
 			const font = fonts[i];
@@ -119,6 +118,7 @@ export default class FontManager {
 	 * Return font map
 	 */
 	public getFonts(): FontList {
+		// console.log('getFonts()', this.fonts);
 		return this.fonts;
 	}
 
@@ -165,22 +165,15 @@ export default class FontManager {
 	 */
 	public setActiveFont(fontFamily: string, runOnChange = true): void {
 		const previousFontFamily = this.activeFontFamily;
-		const activeFont = this.fonts.get(fontFamily);
-		if (!activeFont) {
-			// Font is not in fontList: Keep current activeFont and log error
-			throw Error(`Cannot update active font: "${fontFamily}" is not in the font list`);
-		}
 
 		this.activeFontFamily = fontFamily;
 		loadActiveFont(
-			activeFont,
+			fontFamily,
 			previousFontFamily,
-			this.options.scripts,
-			this.options.variants,
 			this.selectorSuffix,
 		).then((): void => {
 			if (runOnChange) {
-				this.onChange(activeFont);
+				this.onChange(fontFamily);
 			}
 		});
 	}
@@ -188,7 +181,7 @@ export default class FontManager {
 	/**
 	 * Update the onChange function (executed when changing the active font)
 	 */
-	public setOnChange(onChange: (font: Font) => void): void {
+	public setOnChange(onChange: (font: String) => void): void {
 		this.onChange = onChange;
 	}
 }

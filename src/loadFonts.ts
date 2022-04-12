@@ -2,7 +2,6 @@ import { applyActiveFont, applyFontPreview } from "./font-styles/declarations";
 import {
 	createStylesheet,
 	fillStylesheet,
-	setStylesheetType,
 	stylesheetExists,
 } from "./font-styles/stylesheets";
 import extractFontStyles from "./google-fonts/extractFontStyles";
@@ -14,7 +13,7 @@ import { Font, FontList, Script, Variant } from "./types";
  * only the characters needed for creating the font previews), add the necessary CSS declarations to
  * apply them and add the fonts' stylesheets to the document head
  */
-export async function loadFontPreviews(
+ export async function loadFontPreviews(
 	fonts: FontList,
 	scripts: Script[],
 	variants: Variant[],
@@ -43,11 +42,9 @@ export async function loadFontPreviews(
 		if (fontsToFetch.includes(font.id)) {
 			// Make sure response contains styles for the font
 			if (!(font.id in fontStyles)) {
-				console.error(
-					`Missing styles for font "${font.family}" (fontId "${font.id}") in Google Fonts response`,
-				);
 				return;
 			}
+
 			// Insert styles into the stylesheet element which was created earlier
 			fillStylesheet(font.id, fontStyles[font.id]);
 		}
@@ -59,33 +56,9 @@ export async function loadFontPreviews(
  * add the necessary CSS declarations to apply it and add the font's stylesheet to the document head
  */
 export async function loadActiveFont(
-	font: Font,
+	font: String,
 	previousFontFamily: string,
-	scripts: Script[],
-	variants: Variant[],
 	selectorSuffix: string,
-): Promise<void> {
-	// Only load font if it doesn't have a stylesheet yet
-	if (stylesheetExists(font.id, false)) {
-		// Add CSS declaration to apply the new active font
+	): Promise<void> {
 		applyActiveFont(font, previousFontFamily, selectorSuffix);
-	} else {
-		if (stylesheetExists(font.id, true)) {
-			// Update the stylesheet's "data-is-preview" attribute to "false"
-			setStylesheetType(font.id, false);
-		} else {
-			// Create stylesheet for the font to be fetched (this prevents other font pickers from loading
-			// the font as well)
-			createStylesheet(font.id, false);
-		}
-
-		// Get Google Fonts stylesheet containing all requested styles
-		const fontStyle = await getStylesheet([font], scripts, variants, false);
-
-		// Add CSS declaration to apply the new active font
-		applyActiveFont(font, previousFontFamily, selectorSuffix);
-
-		// Insert styles into the stylesheet element which was created earlier
-		fillStylesheet(font.id, fontStyle);
 	}
-}
