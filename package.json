@@ -1,13 +1,8 @@
 {
-	"name": "@samuelmeuli/font-manager",
+	"name": "@imposium-hub/font-manager",
 	"version": "1.4.0",
 	"description": "Manages, downloads and applies Google Fonts for picker components",
-	"author": {
-		"name": "Samuel Meuli",
-		"email": "me@samuelmeuli.com",
-		"url": "https://samuelmeuli.com"
-	},
-	"repository": "github:samuelmeuli/font-manager",
+	"repository": "https://github.com/NickelMedia/font-manager",
 	"license": "MIT",
 	"keywords": [
 		"fonts",
