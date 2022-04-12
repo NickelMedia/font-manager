@@ -1,6 +1,6 @@
 {
 	"name": "@imposium-hub/font-manager",
-	"version": "1.4.3",
+	"version": "1.4.4",
 	"description": "Manages, downloads and applies Google Fonts for picker components",
 	"repository": "https://github.com/NickelMedia/font-manager",
 	"license": "MIT",
