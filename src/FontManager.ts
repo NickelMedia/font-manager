@@ -70,7 +70,7 @@ import { getFontId, validatePickerId } from "./utils/ids";
 
 		// Download default font and add it to the empty font list
 		this.addFont(defaultFamily, false);
-		this.setActiveFont(defaultFamily, false);
+		this.setActiveFont(defaultFamily);
 	}
 
 	/**
@@ -163,8 +163,10 @@ import { getFontId, validatePickerId } from "./utils/ids";
 	/**
 	 * Set the specified font as the active font and download it
 	 */
-	public setActiveFont(fontFamily: string, runOnChange = true): void {
+	public setActiveFont(fontFamily: string): void {
+
 		const previousFontFamily = this.activeFontFamily;
+		const runOnChange = (fontFamily === 'Font not found') ? false : true;
 
 		this.activeFontFamily = fontFamily;
 		loadActiveFont(
