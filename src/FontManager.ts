@@ -118,7 +118,6 @@ import { getFontId, validatePickerId } from "./utils/ids";
 	 * Return font map
 	 */
 	public getFonts(): FontList {
-		// console.log('getFonts()', this.fonts);
 		return this.fonts;
 	}
 
