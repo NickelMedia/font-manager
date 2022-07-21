@@ -56,7 +56,7 @@ import { Font, FontList, Script, Variant } from "./types";
  * add the necessary CSS declarations to apply it and add the font's stylesheet to the document head
  */
 export async function loadActiveFont(
-	font: String,
+	font: string,
 	previousFontFamily: string,
 	selectorSuffix: string,
 	): Promise<void> {
