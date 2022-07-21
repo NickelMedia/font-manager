@@ -16,7 +16,7 @@ import { getFontId, validatePickerId } from "./utils/ids";
 
 	private readonly options: Options;
 
-	private onChange: (font: String) => void;
+	private onChange: (font: string) => void;
 
 	// Other class variables
 
@@ -48,7 +48,7 @@ import { getFontId, validatePickerId } from "./utils/ids";
 			sort = OPTIONS_DEFAULTS.sort,
 		}: Options,
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
-		onChange: (font: String) => void = (): void => {},
+		onChange: (font: string) => void = (): void => {},
 	) {
 		// Validate pickerId parameter
 		validatePickerId(pickerId);
@@ -165,7 +165,7 @@ import { getFontId, validatePickerId } from "./utils/ids";
 	public setActiveFont(fontFamily: string): void {
 
 		const previousFontFamily = this.activeFontFamily;
-		const runOnChange = (fontFamily === 'Font not found') ? false : true;
+		const runOnChange = fontFamily !== 'Font not found';
 
 		this.activeFontFamily = fontFamily;
 		loadActiveFont(
@@ -182,7 +182,7 @@ import { getFontId, validatePickerId } from "./utils/ids";
 	/**
 	 * Update the onChange function (executed when changing the active font)
 	 */
-	public setOnChange(onChange: (font: String) => void): void {
+	public setOnChange(onChange: (font: string) => void): void {
 		this.onChange = onChange;
 	}
 }
