@@ -1,7 +1,7 @@
 import "./picker-styles/styles.scss";
 
 import getFontList from "./google-fonts/fontList";
-import { loadActiveFont, loadFontPreviews } from "./loadFonts";
+import { loadActiveFont } from "./loadFonts";
 import { Font, FONT_FAMILY_DEFAULT, FontList, Options, OPTIONS_DEFAULTS } from "./types";
 import { getFontId, validatePickerId } from "./utils/ids";
 
@@ -69,7 +69,7 @@ import { getFontId, validatePickerId } from "./utils/ids";
 		this.onChange = onChange;
 
 		// Download default font and add it to the empty font list
-		this.addFont(defaultFamily, false);
+		this.addFont(defaultFamily);
 		this.setActiveFont(defaultFamily);
 	}
 
@@ -107,9 +107,9 @@ import { getFontId, validatePickerId } from "./utils/ids";
 		}
 		// Download previews for all fonts in list except for default font (its full font has already
 		// been downloaded)
-		const fontsToLoad = new Map(this.fonts);
-		fontsToLoad.delete(this.activeFontFamily);
-		loadFontPreviews(fontsToLoad, this.options.scripts, this.options.variants, this.selectorSuffix);
+		// const fontsToLoad = new Map(this.fonts);
+		// fontsToLoad.delete(this.activeFontFamily);
+		// loadFontPreviews(fontsToLoad, this.options.scripts, this.options.variants, this.selectorSuffix);
 
 		return this.fonts;
 	}
@@ -124,7 +124,7 @@ import { getFontId, validatePickerId } from "./utils/ids";
 	/**
 	 * Add a new font to the font map and download its preview characters
 	 */
-	public addFont(fontFamily: string, downloadPreview = true): void {
+	public addFont(fontFamily: string): void {
 		// @ts-ignore: Custom font does not need `categories`, `scripts` and `variants` attributes
 		const font: Font = {
 			family: fontFamily,
@@ -133,11 +133,11 @@ import { getFontId, validatePickerId } from "./utils/ids";
 		this.fonts.set(fontFamily, font);
 
 		// Download font preview unless specified not to
-		if (downloadPreview) {
-			const fontMap: FontList = new Map<string, Font>();
-			fontMap.set(fontFamily, font);
-			loadFontPreviews(fontMap, this.options.scripts, this.options.variants, this.selectorSuffix);
-		}
+		// if (downloadPreview) {
+		// 	const fontMap: FontList = new Map<string, Font>();
+		// 	fontMap.set(fontFamily, font);
+		// 	loadFontPreviews(fontMap, this.options.scripts, this.options.variants, this.selectorSuffix);
+		// }
 	}
 
 	/**

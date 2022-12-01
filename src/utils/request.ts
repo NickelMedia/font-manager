@@ -14,6 +14,7 @@ export default function get(url: string): Promise<string> {
 					reject(new Error(`Response has status code ${request.status}`));
 				} else {
 					// On success
+					// console.log(request.responseText)
 					resolve(request.responseText);
 				}
 			}
