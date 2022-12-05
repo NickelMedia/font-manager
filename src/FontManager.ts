@@ -105,11 +105,6 @@ import { getFontId, validatePickerId } from "./utils/ids";
 				this.fonts.set(font.family, font);
 			}
 		}
-		// Download previews for all fonts in list except for default font (its full font has already
-		// been downloaded)
-		// const fontsToLoad = new Map(this.fonts);
-		// fontsToLoad.delete(this.activeFontFamily);
-		// loadFontPreviews(fontsToLoad, this.options.scripts, this.options.variants, this.selectorSuffix);
 
 		return this.fonts;
 	}
@@ -125,26 +120,15 @@ import { getFontId, validatePickerId } from "./utils/ids";
 	 * Add a new font to the font map and download its preview characters
 	 */
 	public addFont(fontFamily: string): void {
-		// @ts-ignore: Custom font does not need `categories`, `scripts` and `variants` attributes
 		const font: Font = {
 			family: fontFamily,
 			id: getFontId(fontFamily),
+			variants: [],
+			category: 'display',
+			scripts: []
+
 		};
 		this.fonts.set(fontFamily, font);
-
-		// Download font preview unless specified not to
-		// if (downloadPreview) {
-		// 	const fontMap: FontList = new Map<string, Font>();
-		// 	fontMap.set(fontFamily, font);
-		// 	loadFontPreviews(fontMap, this.options.scripts, this.options.variants, this.selectorSuffix);
-		// }
-	}
-
-	/**
-	 * Remove the specified font from the font map
-	 */
-	public removeFont(fontFamily: string): void {
-		this.fonts.delete(fontFamily);
 	}
 
 	/**
@@ -171,7 +155,6 @@ import { getFontId, validatePickerId } from "./utils/ids";
 		loadActiveFont(
 			fontFamily,
 			previousFontFamily,
-			this.selectorSuffix,
 		).then((): void => {
 			if (runOnChange) {
 				this.onChange(fontFamily);
