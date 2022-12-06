@@ -1,5 +1,3 @@
-import "./picker-styles/styles.scss";
-
 import getFontList from "./google-fonts/fontList";
 import { loadActiveFont } from "./loadFonts";
 import { Font, FONT_FAMILY_DEFAULT, FontList, Options, OPTIONS_DEFAULTS } from "./types";
