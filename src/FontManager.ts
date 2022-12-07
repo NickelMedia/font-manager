@@ -85,6 +85,7 @@ import { getFontId, validatePickerId } from "./utils/ids";
 			if (this.fonts.size >= this.options.limit) {
 				break;
 			}
+
 			if (
 				// Skip default font if it is also contained in the list
 				!this.fonts.has(font.family) &&
@@ -108,13 +109,6 @@ import { getFontId, validatePickerId } from "./utils/ids";
 	}
 
 	/**
-	 * Return font map
-	 */
-	public getFonts(): FontList {
-		return this.fonts;
-	}
-
-	/**
 	 * Add a new font to the font map and download its preview characters
 	 */
 	public addFont(fontFamily: string): void {
@@ -127,18 +121,6 @@ import { getFontId, validatePickerId } from "./utils/ids";
 
 		};
 		this.fonts.set(fontFamily, font);
-	}
-
-	/**
-	 * Return the font object of the currently active font
-	 */
-	public getActiveFont(): Font {
-		const activeFont = this.fonts.get(this.activeFontFamily);
-		if (!activeFont) {
-			throw Error(`Cannot get active font: "${this.activeFontFamily}" is not in the font list`);
-		} else {
-			return activeFont;
-		}
 	}
 
 	/**
